@@ -10,11 +10,14 @@ settings={
 options={
     "port":8000,
 }
-class Token:
+class Token():
+    def __init__(self, user, psw):
+        self.user=user
+        self.psw=psw
+        self.secrect = "mymarry"
+        self.serializer = Serializer(secret_key=self.secrect, expires_in=50)   
     def settoken(self):
-        self.secrect=uuid.uuid4()
-        self.serializer = Serializer(secret_key=str(self.secrect), expires_in=5)
-        self.token = self.serializer.dumps({"id": 5, "name": "itsdangerous"}).decode()
+        self.token = self.serializer.dumps({"username": self.user, "password": self.psw}).decode()
         return self.token
     def gettoken(self,token):
         try:
@@ -22,9 +25,5 @@ class Token:
         except BadData:
             print("超时")
         else:
-            print(self.data)
+            return self.data
         
-
-# t=Token()
-# token=t.settoken()
-# print(token)

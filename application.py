@@ -1,8 +1,9 @@
 import tornado.web
 import config
-from views import index
+from views import view
 
 def make_app():
     return tornado.web.Application([
-        (r'/',index.IndexHandler),
+        (r'/',view.LoginHandler),
+        (r'/index/', view.IndexHandler),
         ],**config.settings)
